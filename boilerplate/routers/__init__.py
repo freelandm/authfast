@@ -4,8 +4,7 @@ from routers.users import router as users_router
 from routers.items import router as items_router
 
 __all__ = [
-    'static_router'
-    'health_router',
-    'users_router',
-    'items_router',
+    "static_router" "health_router",
+    "users_router",
+    "items_router",
 ]

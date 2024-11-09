@@ -12,9 +12,9 @@ router = APIRouter(
 
 
 fake_items_db = {
-    "plumbus": {"name": "Plumbus", "value": 36}, 
+    "plumbus": {"name": "Plumbus", "value": 36},
     "gun": {"name": "Portal Gun", "value": 17},
-    "borked": {"name": "Borked Item"}
+    "borked": {"name": "Borked Item"},
 }
 
 
