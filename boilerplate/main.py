@@ -1,6 +1,6 @@
 from typing import Annotated
 from fastapi import Depends, FastAPI
-from dependencies import get_query_token, get_token_header
+from dependencies import get_query_token
 from fastapi.security import OAuth2PasswordBearer
 from routers import static_router, health_router, items_router, users_router
 
