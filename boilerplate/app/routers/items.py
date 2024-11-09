@@ -1,21 +1,31 @@
+from typing import Annotated, Dict
 from fastapi import APIRouter, Depends, HTTPException
-
-from dependencies import get_token_header
+from dependencies.auth import oauth2_scheme
 from models.items import Item
+from logger import logger
 
 router = APIRouter(
     prefix="/items",
     tags=["items"],
-    dependencies=[Depends(get_token_header)],
+    # dependencies=[Depends(first_callable_deps), Depends(second_callable_deps), ... ],
     responses={404: {"description": "Not found"}},
 )
 
+protected_items_db = {
+    "silencer": {"name": "Golden Silencer", "value": 4000},
+    "treasure": {"name": "Treasure Chest", "value": 42000},
+}
 
 fake_items_db = {
     "plumbus": {"name": "Plumbus", "value": 36},
     "gun": {"name": "Portal Gun", "value": 17},
     "borked": {"name": "Borked Item"},
 }
+
+@router.get("/protected")
+async def read_protected_items(token: Annotated[str, Depends(oauth2_scheme)]) -> Dict[str, Item]:
+    logger.info(f'{token=}')
+    return protected_items_db
 
 
 @router.get("/{item_id}")
