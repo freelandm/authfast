@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  web:
+    command: poetry run fastapi dev app/main.py --host 0.0.0.0 --port 5001 --reload
+    build:
+      context: .
+    #  dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-matt}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-bigdog}
+      - POSTGRES_DB=${POSTGRES_DB:-app}
+      # Construct DATABASE_URL from the same environment variables
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-matt}:${POSTGRES_PASSWORD:-bigdog}@db:5432/${POSTGRES_DB:-app}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_FULL_NAME=${ADMIN_FULL_NAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - ADMIN_HASHED_PASSWORD=${ADMIN_HASHED_PASSWORD}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - APPLICATION_HOSTNAME=${APPLICATION_HOSTNAME}
+    depends_on:
+      - db
+    volumes:
+      - .:/project
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5001/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-matt}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-bigdog}
+      - POSTGRES_DB=${POSTGRES_DB:-app}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      #- init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-matt} -d ${POSTGRES_DB:-app}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+
+networks:
+  app-network:
+    driver: bridge

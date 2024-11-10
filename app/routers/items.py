@@ -1,8 +1,8 @@
 from typing import Annotated, Dict
 from fastapi import APIRouter, Depends, HTTPException
-from dependencies.auth import oauth2_scheme
-from models.items import Item
-from logger import logger
+from app.dependencies.auth import oauth2_scheme
+from app.models.items import Item
+from app.logger import logger
 
 router = APIRouter(
     prefix="/items",

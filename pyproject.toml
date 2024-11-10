@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "boilerplate"
+name = "app"
 version = "0.1.0"
 description = ""
 authors = ["Matt Freeland <mattfreeland78@gmail.com>"]
@@ -11,6 +11,13 @@ fastapi = {extras = ["standard"], version = "^0.115.4"}
 ruff = "^0.7.3"
 pyjwt = "^2.9.0"
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+alembic = "^1.14.0"
+sqlalchemy = "^2.0.36"
+psycopg2-binary = "^2.9.10"
+pydantic-settings = "^2.6.1"
+sqlmodel = "^0.0.22"
+inflect = "^7.4.0"
+sendgrid = "^6.11.0"
 
 
 [build-system]
