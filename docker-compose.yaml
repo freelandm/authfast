@@ -21,6 +21,7 @@ services:
       - ADMIN_HASHED_PASSWORD=${ADMIN_HASHED_PASSWORD}
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}
       - APPLICATION_HOSTNAME=${APPLICATION_HOSTNAME}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
     depends_on:
       - db
     volumes:

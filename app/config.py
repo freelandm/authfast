@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     ADMIN_HASHED_PASSWORD: str
     SENDGRID_API_KEY: str
     APPLICATION_HOSTNAME: str
+    JWT_SECRET_KEY: str
     
     class Config:
         env_file = ".env"
