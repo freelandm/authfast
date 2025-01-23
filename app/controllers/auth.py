@@ -1,4 +1,3 @@
-
 from dataclasses import dataclass
 from app.db.dao import UserDao
 from app.dependencies.auth import SECRET_KEY, ALGORITHM

@@ -1,16 +1,13 @@
 from dataclasses import dataclass
 import os
-from urllib.parse import urlencode
 from app.controllers.email import EmailController
 from app.db.dao import UserDao
-from app.dependencies.auth import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, pwd_context, oauth2_scheme
+from app.dependencies.auth import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, pwd_context
 
 import jwt
-from jwt.exceptions import InvalidTokenError
-from typing import Annotated, Union
-from fastapi import Depends,  HTTPException, status
+from typing import Union
+from fastapi import HTTPException, status
 from datetime import datetime, timedelta, timezone
-from app.db.dao import user_dao
 from app.models.users import User, UserRegistrationParameters
 from app.params import SendEmailParams
 
@@ -38,7 +35,7 @@ class UserController:
             email=params.email,
             username=params.username,
             hashed_password=self.get_password_hash(params.password),
-            full_name="Johnny Depp"
+            full_name=params.full_name
         )
         return self.user_dao.create_one(
             user=user
@@ -64,7 +61,6 @@ class UserController:
             data={"sub": {"email_address_verification": user.email}}, expires_delta=access_token_expires
         )
         application_hostname = os.environ.get('APPLICATION_HOSTNAME')
-        #urlencode()
         return f'{application_hostname}/api/auth/verify_email?token={token}'
     
     def authenticate(self, username: str, password: str) -> str:

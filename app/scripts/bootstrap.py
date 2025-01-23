@@ -25,5 +25,6 @@ def inject_admin_user():
     except Exception as e:
         logging.warning(f'Failed to create admin user for {email}: {e}')
 
+# bootstraps the application with configurable admin user
 def bootstrap():
     inject_admin_user()
