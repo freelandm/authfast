@@ -19,6 +19,20 @@ sqlmodel = "^0.0.22"
 inflect = "^7.4.0"
 sendgrid = "^6.11.0"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-asyncio = "^0.21.0"
+httpx = "^0.25.0"
+pytest-cov = "^4.1.0"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.5.3"
+mkdocs-material = "^9.4.8"
+mkdocs-swagger-ui-tag = "^0.6.8"
+mkdocstrings = "^0.24.0"
+mkdocstrings-python = "^1.7.5"
+mkdocs-include-markdown-plugin = "^6.0.4"
+mkdocs-mermaid2-plugin = "^1.1.1"
 
 [build-system]
 requires = ["poetry-core"]
